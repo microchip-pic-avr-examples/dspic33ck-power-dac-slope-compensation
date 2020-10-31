@@ -10,8 +10,9 @@ pipeline {
 
 	environment {
 	    NOTIFICATION_EMAIL = '1f1319de.microchip.com@amer.teams.ms'	
+		//Branch to be deployed, if multiple branches use comma separated string
 		//This is the BitBucket source repo URL to be deployed
-		BITBUCKET_SOURCE_URL = 'https://bitbucket.microchip.com/scm/mcu16ce/dspic33ck-power-dac-slope-compensation.git'
+		BITBUCKET_SOURCE_URL = 'https://bitbucket.microchip.com/scm/mcu16ce/dspic33ck-power-pwm-phase-shift.git'
 		BITBUCKET_CREDENTIAL_ID = 'BITBUCKET_INTERNAL_TOKEN'
 		GITHUB_PRODUCTION_DEPLOY_URL ='https://github.com/microchip-pic-avr-examples'
 		GITHUB_TEST_DEPLOY_URL ='https://github.com/mchpTestArea'
@@ -54,6 +55,14 @@ pipeline {
 	   
 	    // Cloning the tool used for GitHub deployment
 	   	stage('GitHub tool clone'){
+			when {
+                    anyOf {
+                        allOf {
+                            not { changeRequest() }
+                            anyOf {branch 'master'; branch 'test_deploy';}
+                        }
+                    }
+            }
             steps{
                script{
                     execute("git clone https://bitbucket.microchip.com/scm/citd/tool-github-deploy.git")
@@ -61,16 +70,6 @@ pipeline {
                 }
             }
         } 
-		
-		
-	    // Validate main.json file
-	   	stage('Validate main.json'){
-            steps{
-               script{
-                    execute("python tool-github-deploy/tool-github-deploy/tool-github-deploy.py -vdo=true -vmf=${env.SOURCE_PROJECT_META_DATA} -vjsf=tool-github-deploy/tool-github-deploy/json/json_schema.json")                    
-                }
-            }
-        }
 		
 		// Creating tag in Bitbucket repo
 	   	stage('Bitbucket Tag Creation'){
