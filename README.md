@@ -11,8 +11,8 @@
 - - -
 
 ## Summary
-Learning how to use the DAC and High Resolution PWM  Module of dsPIC33C MP devices, Lab 10:
-Code example for dsPIC33CK and dsPIC33CH devices showing a basic configuration of the DAC and High Resolution PWM module generating a slope compesation ramp waveform
+Learning how to use the DAC of dsPIC33C MP devices, Lab 10:
+Code example for dsPIC33CK and dsPIC33CH devices showing a basic configuration of the DAC generating a slope compesation ramp waveform
 
 - - -
 
