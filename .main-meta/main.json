@@ -37,7 +37,8 @@
       "peripherals":[
          "GPIO",
 		 "PWM",
-         "Timer"
+         "Timer",
+		 "DAC"
       ],
       "keywords":[
          "dsc",
@@ -45,7 +46,8 @@
 		 "power",
 		 "power-conversion",
 		 "power-supply",
-		 "smps"
+		 "smps",
+		 "slope-compensation"
       ]
    }
 }
