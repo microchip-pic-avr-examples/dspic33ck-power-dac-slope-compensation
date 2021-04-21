@@ -157,7 +157,7 @@
  * ********************************************************************* */
 
 // Digital Power Plug-In Module On-Board LED control
-#define LED_INTERVAL    3000
+#define LED_INTERVAL    5000
 volatile uint16_t dbgled_cnt = 0;
 
 
@@ -173,9 +173,8 @@ int main(void)
     // User PWM Initialization
     PWM_Initialize();
     
+    // User DAC Initialization
     DAC_Initialize();
-    
-    // User PWM Initialization
     
     // Initialize DP PIM and DP DevBoard function pins
     _T1IF = 0;
@@ -183,6 +182,7 @@ int main(void)
     DBGLED_InitAsOutput();
     SW_InitAsInput();
     TP03_InitAsOutput();
+    
     /* main loop */
     while (1)
     {
@@ -204,19 +204,17 @@ int main(void)
             while(SW_Read() == SW_PRESSED); 
 
             // Update PWM timing registers
-            if(my_dac_instance->SLPxDAT.value == DAC_SLOPE_RATE_1)   // If DAC slope rate is set to 100mV/us
+            if(my_dac_instance->SLPxDAT.value == SLP_SLEW_RATE_1)   // If DAC slope rate is set to 100mV/us
             {
-                
-                my_dac_instance->DACxDATL.value = (uint16_t)(DACOUT_VALUE_LOW_2 & 0x0FFF); // Decrease the DAC Lower value to increase the Slope rate
-                my_dac_instance->SLPxDAT.value = DAC_SLOPE_RATE_2; // DAC slope rate is set to 300mV/uS
+                my_dac_instance->DACxDATH.value = (uint16_t)(DACOUT_VALUE_HIGH_2 & 0x0FFF); // Decrease the DAC Lower value to increase the Slope rate
+                my_dac_instance->SLPxDAT.value = SLP_SLEW_RATE_2; // DAC slope rate is set to 300mV/uS
             }
             else
             {
-                my_dac_instance->DACxDATL.value = (uint16_t)(DACOUT_VALUE_LOW_1 & 0x0FFF); 
-                my_dac_instance->SLPxDAT.value = DAC_SLOPE_RATE_1;
+                my_dac_instance->DACxDATH.value = (uint16_t)(DACOUT_VALUE_HIGH_1 & 0x0FFF); 
+                my_dac_instance->SLPxDAT.value = SLP_SLEW_RATE_1;
                 
             }
-
            
             DBGPIN_Set();  // Set debug pin as oscilloscope trigger
             
