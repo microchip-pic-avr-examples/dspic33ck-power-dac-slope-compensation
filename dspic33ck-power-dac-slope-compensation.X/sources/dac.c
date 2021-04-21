@@ -27,52 +27,52 @@
  * Revision history: Initial Release
  */
 
-#include <xc.h>
+#include <xc.h> // include processor files - each processor file is guarded.  
+#include <stdint.h> // include standard integer data types
+#include <stdbool.h> // include standard boolean data types
+#include <stddef.h> // include standard definition data types
 
+#include "config/demo.h"
 #include "dac.h"
-
-
 
 volatile struct P33C_DAC_MODULE_s* my_dac_module;     // user-defined DAC object 
 volatile struct P33C_DAC_INSTANCE_s* my_dac_instance;
 
 volatile uint16_t DAC_Initialize(void){
 
-volatile uint16_t retval=1;
+    volatile uint16_t retval=1;
 
-my_dac_module = p33c_DacModule__GetHandle();
-p33c_DacModule_ConfigWrite(dacModuleConfigClear);
+    my_dac_module = p33c_DacModule__GetHandle();
+    retval &= p33c_DacModule_ConfigWrite(dacModuleConfigClear);
 
+    my_dac_module->DacModuleCtrl1L.bits.CLKSEL =0b10;  // DAC Clock Source: AFPLLO  
+    my_dac_module->DacModuleCtrl2H.bits.SSTIME = (DAC_SSTIME & 0x0FFF); // Transition Mode Duration (default 0x55 = 340ns @ 500 MHz)     
+    my_dac_module->DacModuleCtrl2L.bits.TMODTIME = (DAC_TMODTIME  & 0x03FF); // Time from Start of Transition Mode until Steady-State Filter is Enabled (default 0x8A = 552ns @ 500 MHz)
 
-my_dac_module->DacModuleCtrl1L.bits.CLKSEL =0b10;  // DAC Clock Source: AFPLLO  
-my_dac_module->DacModuleCtrl2H.bits.SSTIME = (DAC_SSTIME & 0x0FFF); // Transition Mode Duration (default 0x55 = 340ns @ 500 MHz)     
-my_dac_module->DacModuleCtrl2L.bits.TMODTIME = (DAC_TMODTIME  & 0x03FF); // Time from Start of Transition Mode until Steady-State Filter is Enabled (default 0x8A = 552ns @ 500 MHz)
+    my_dac_instance = p33c_DacInstance__GetHandle(DAC_INSTANCE); //// user-defined DAC 1 object 
+    retval &= p33c_DacInstance_ConfigWrite(DAC_INSTANCE, dacConfigClear);
 
+    #if defined (__MA330048_dsPIC33CK_DPPIM__)
+    my_dac_instance->SLPxCONL.bits.SLPSTOPA = 0b0001; // Slope Stop A Signal: PWM1 Trigger 2
+    #elif defined (__MA330049_dsPIC33CH_DPPIM__)
+    pg->SLPxCONL.bits.SLPSTOPA = 0b0101;  // Slope Stop A Signal: PWM1 Trigger 2
+    #endif
 
-my_dac_instance = p33c_DacInstance__GetHandle(DAC1); //// user-defined DAC 1 object 
-
-p33c_DacInstance_ConfigWrite(DAC1,dacConfigClear);
-        
-#if defined (__MA330048_dsPIC33CK_DPPIM__)
-my_dac_instance->SLPxCONL.bits.SLPSTOPA = 0b0001; // Slope Stop A Signal: PWM1 Trigger 2
-#elif defined (__MA330049_dsPIC33CH_DPPIM__)
-pg->SLPxCONL.bits.SLPSTOPA = 0b0101;  // Slope Stop A Signal: PWM1 Trigger 2
-#endif
-my_dac_instance->SLPxCONL.bits.SLPSTOPB = 0b0001; // Slope Stop B Signal: Comparator 1
-my_dac_instance->SLPxCONL.bits.SLPSTRT = 0b0001;  // Slope Start Signal: PWM1 Trigger 1
+    my_dac_instance->SLPxCONL.bits.SLPSTOPB = 0b0000; // Slope Stop B Signal: 0=none, 1=comparator 1, 2=comparator 2, etc.
+    my_dac_instance->SLPxCONL.bits.SLPSTRT  = 0b0001; // Slope Start Signal: PWM1 Trigger 1
+//    my_dac_instance->SLPxCONL.bits.SLPSTOPA = 0b0001; // Slope Stop A Signal: PWM1 Trigger 2
+    my_dac_instance->SLPxDAT.value  = SLP_SLEW_RATE_1; // Slope Ramp Rate Value Slope 
     
-my_dac_instance->SLPxDAT.value = DAC_SLOPE_RATE_1; // Slope Ramp Rate Value Slope 
-my_dac_instance->SLPxCONH.bits.SLOPEN = 1;        // Slope Function: Enable slope function; 
-my_dac_instance->DACxDATL.value = (uint16_t)(DACOUT_VALUE_LOW_1 & 0x0FFF);  // In Hysteretic mode, Slope Generator mode and Triangle mode, this register specifies the low data value and/or limit for the DACx module
-my_dac_instance->DACxDATH.value = (uint16_t)(DACOUT_VALUE_HIGH & 0x0FFF);   // specifies the high DACx data value
+    my_dac_instance->DACxDATH.value = DACOUT_VALUE_HIGH_1;   // specifies the high DACx data value
+    my_dac_instance->DACxDATL.value = 0;  // In Hysteretic mode, Slope Generator mode and Triangle mode, this register specifies the low data value and/or limit for the DACx module
+    my_dac_instance->DACxCONH.value = DAC_LEADING_EDGE_BLNK; // Set DAC Leading Edge Blanking period
     
-my_dac_instance->DACxCONL.bits.DACOEN = 1;  // Output DAC voltage to DACOUT1 pin
-    
-my_dac_instance->DACxCONL.bits.DACEN = 1;   // enable DAC module
-    
-my_dac_module->DacModuleCtrl1L.bits.DACON= 1; // enable DAC
+    my_dac_instance->SLPxCONH.bits.SLOPEN = 1;      // Slope Function: Enable slope function; 
+    my_dac_instance->DACxCONL.bits.DACOEN = 1;      // Output DAC voltage to DACOUT1 pin
+    my_dac_instance->DACxCONL.bits.DACEN = 1;       // enable DAC module
+    my_dac_module->DacModuleCtrl1L.bits.DACON= 1;   // enable DAC
 
-return(retval);
+    return(retval);
 
 }
 

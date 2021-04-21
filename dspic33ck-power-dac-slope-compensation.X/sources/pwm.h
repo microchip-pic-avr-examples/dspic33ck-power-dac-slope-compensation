@@ -37,17 +37,9 @@
 #include "common/p33c_pwm.h" // Include dsPIC33C standard PWM driver header file
 
 
-#ifdef	__cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
  /* *********************************************************************************
  * USER DEFINED GLOBAL VARIABLE DECLARATIONS
  * ********************************************************************************/    
-
-// PWM declarations for demo code
-#define PWM_GENERATOR    1   // Specify index of leading PWM generator instance (1=PG1, 3=PG2, etc)
-
     
 /* Declare global, user-defined PWM generator object */    
 extern volatile struct P33C_PWM_GENERATOR_s* my_pg1; // pointer to user-defined leading PWM generator object 
@@ -65,10 +57,6 @@ extern volatile struct P33C_PWM_GENERATOR_s* my_pg3; // pointer to user-defined 
  * ********************************************************************************/    
     
 extern volatile uint16_t PWM_Initialize(void);
-    
-#ifdef	__cplusplus
-}
-#endif /* __cplusplus */
 
 #endif	/* XC_PWM_INITIALIZATION_H */
 
