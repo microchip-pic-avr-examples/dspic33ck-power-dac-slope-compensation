@@ -167,6 +167,7 @@ volatile uint16_t dbgled_cnt = 0;
 int main(void)
 {
     volatile uint16_t retval=1; // Local function return verification variable
+    volatile uint16_t test_level=1;
     
     // initialize the device
     SYSTEM_Initialize();
@@ -209,18 +210,30 @@ int main(void)
             while(SW_Read() == SW_PRESSED); 
 
             // Update PWM timing registers
-            if(my_dac_instance->SLPxDAT.value == SLP_SLEW_RATE_1)   // If DAC slope rate is set to 100mV/us
+            switch (test_level)   // If DAC is set to test level #1, switch to #2
             {
-                my_dac_instance->DACxDATH.value = (uint16_t)(DACOUT_VALUE_HIGH_2 & 0x0FFF); // Decrease the DAC Lower value to increase the Slope rate
-                my_dac_instance->SLPxDAT.value = SLP_SLEW_RATE_2; // DAC slope rate is set to 300mV/uS
+                case 1:
+                    my_dac->DACxDATH.value = DACOUT_VALUE_HIGH_2; // Decrease the DAC Lower value to increase the Slope rate
+                    my_dac->SLPxDAT.value = SLP_SLEW_RATE_2; // DAC slope rate is set to 400mV/uS
+                    test_level = 2;
+                    break;
+
+                default:    // Set DAC to test level #1
+                    my_dac->SLPxDAT.value = SLP_SLEW_RATE_1; // DAC slope rate is set to 200mV/uS
+                    my_dac->DACxDATH.value = DACOUT_VALUE_HIGH_1; // Decrease the DAC Lower value to increase the Slope rate
+                    test_level = 1;
+                    break;
             }
-            else
-            {
-                my_dac_instance->DACxDATH.value = (uint16_t)(DACOUT_VALUE_HIGH_1 & 0x0FFF); 
-                my_dac_instance->SLPxDAT.value = SLP_SLEW_RATE_1;
-                
-            }
-           
+
+            // 
+//            if(my_dac->SLPxDAT.bits.SLPDAT != SLP1DAT)
+//            {
+//                Nop();
+//                Nop();
+//                Nop();
+//                Nop();
+//            }
+            
             DBGPIN_Set();  // Set debug pin as oscilloscope trigger
             
         }
