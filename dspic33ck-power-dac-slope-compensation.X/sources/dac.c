@@ -41,6 +41,7 @@ volatile struct P33C_DAC_INSTANCE_s* my_dac; // User-specified DAC instance
 /* Declaration of generic DAC module data object */
 volatile struct P33C_DAC_MODULE_s* my_dac_module;     // DAC module object 
 
+
 volatile uint16_t DAC_Initialize(void){
 
     volatile uint16_t retval=1;
@@ -52,7 +53,7 @@ volatile uint16_t DAC_Initialize(void){
     my_dac_module->DacModuleCtrl2H.bits.SSTIME = (DAC_SSTIME & 0x0FFF); // Transition Mode Duration (default 0x55 = 340ns @ 500 MHz)     
     my_dac_module->DacModuleCtrl2L.bits.TMODTIME = (DAC_TMODTIME  & 0x03FF); // Time from Start of Transition Mode until Steady-State Filter is Enabled (default 0x8A = 552ns @ 500 MHz)
 
-    my_dac = p33c_DacInstance__GetHandle(DAC_INSTANCE); //// user-defined DAC 1 object 
+    my_dac = p33c_DacInstance_GetHandle(DAC_INSTANCE); //// user-defined DAC 1 object 
     retval &= p33c_DacInstance_ConfigWrite(DAC_INSTANCE, dacConfigClear);
 
     #if defined (__MA330048_dsPIC33CK_DPPIM__)
