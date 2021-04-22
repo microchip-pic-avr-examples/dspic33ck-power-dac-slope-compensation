@@ -35,10 +35,12 @@
 
 #include "common/p33c_dac.h"
 
-extern volatile uint16_t  DAC_Initialize(void);
+extern volatile uint16_t DAC_Initialize(void);
+extern volatile uint16_t DAC_Enable(void);
+extern volatile uint16_t DAC_Disable(void);
 
-extern volatile struct P33C_DAC_MODULE_s* my_dac_module;
-extern volatile struct P33C_DAC_INSTANCE_s* my_dac_instance;
+/* Declare global, user-defined DAC instance object */
+extern volatile struct P33C_DAC_INSTANCE_s* my_dac;
 
 
 #endif	/* XC_HEADER_TEMPLATE_H */
