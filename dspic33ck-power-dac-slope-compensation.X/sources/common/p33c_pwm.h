@@ -83,7 +83,7 @@
 
 #ifndef P33C_PWM_MODULE_s     
 
-    typedef struct P33C_PWM_MODULE_s {
+    struct P33C_PWM_MODULE_s {
         
         union {
             struct tagPCLKCONBITS bits; // Register bit-field
@@ -117,7 +117,7 @@
         struct {
             uint16_t MPER : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }vMPER; // MPER: MASTER PERIOD REGISTER
         union {   
         struct {
@@ -183,7 +183,8 @@
             uint16_t value : 16; // 16-bit wide register value
         }PWMEVT_F; // PWMEVTx: PWM EVENT OUTPUT CONTROL REGISTER x
        
-    } __attribute__((packed)) P33C_PWM_MODULE_t; // PWM MODULE SPECIAL FUNCTION REGISTER SET
+    }; // PWM MODULE SPECIAL FUNCTION REGISTER SET
+    typedef struct P33C_PWM_MODULE_s P33C_PWM_MODULE_t;
 
 #endif
         
@@ -192,7 +193,7 @@
     
 #ifndef P33C_PWM_GENERATOR_s     
 
-    typedef struct P33C_PWM_GENERATOR_s {
+    struct P33C_PWM_GENERATOR_s {
         union {   
             struct tagPG1CONLBITS bits; // Register bit-field
             uint16_t value : 16; // 16-bit wide register value
@@ -223,7 +224,7 @@
         }PGxEVTH;  // PGxEVTH: PWM GENERATOR x EVENT REGISTER HIGH
         union {
             struct tagPG1FPCILBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxFPCIL; // PGxFPCIL: PWM GENERATOR x FAULT PCI REGISTER LOW
         union {
             struct tagPG1FPCIHBITS bits; // Register bit-field
@@ -317,18 +318,29 @@
             } bits; // Register bit-field
             uint16_t value : 16; // 16-bit wide register value
         }PGxCAP; // PGxCAP: PWM GENERATOR x CAPTURE REGISTER
-    } __attribute__((packed)) P33C_PWM_GENERATOR_t; // PWM GENERATOR INSTANCE SPECIAL FUNCTION REGISTER SET
-        
+    }; // PWM GENERATOR INSTANCE SPECIAL FUNCTION REGISTER SET
+    typedef struct P33C_PWM_GENERATOR_s P33C_PWM_GENERATOR_t;
+    
     // PWM generator instance Special Function Register set address offset
     #define P33C_PWMGEN_SFR_OFFSET  ((volatile uint16_t)&PG2CONL - (volatile uint16_t)&PG1CONL)
 
 #endif
 
-// Determine number of available PWM generators on the selected device
+
+// Macro declaration to access PWM module data structure memory address
+#define p33c_PwmModule_GetHandle()      (P33C_PWM_MODULE_t*)&PCLKCON    
+    
+// Macro declaration to access PWM instance data structure memory address
 #if defined (PG8CONL)
-  #define P33C_PG_COUNT   8
+#define P33C_PG_COUNT   8   // Determine number of available PWM generators on the selected device
+#define p33c_PwmGenerator_GetHandle(x)  (P33C_PWM_GENERATOR_t*)&PG1CONL, (P33C_PWM_GENERATOR_t*)&PG2CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG3CONL, (P33C_PWM_GENERATOR_t*)&PG4CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG5CONL, (P33C_PWM_GENERATOR_t*)&PG6CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG7CONL, (P33C_PWM_GENERATOR_t*)&PG8CONL
 #elif defined (PG4CONL)
-  #define P33C_PG_COUNT   4    
+#define P33C_PG_COUNT   4   // Determine number of available PWM generators on the selected device
+#define p33c_PwmGenerator_GetHandle(x)  (P33C_PWM_GENERATOR_t*)&PG1CONL, (P33C_PWM_GENERATOR_t*)&PG2CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG3CONL, (P33C_PWM_GENERATOR_t*)&PG4CONL
 #endif
     
 /* ********************************************************************************************* * 
@@ -340,7 +352,7 @@
  * ********************************************************************************************* */
     
 // PWM Module essential functions
-extern volatile struct P33C_PWM_MODULE_s* p33c_PwmModule_GetHandle(void);
+//extern volatile struct P33C_PWM_MODULE_s* p33c_PwmModule_GetHandle(void); // Replaced by macro
 
 extern volatile struct P33C_PWM_MODULE_s p33c_PwmModule_ConfigRead(void);
 extern volatile uint16_t p33c_PwmModule_ConfigWrite(volatile struct P33C_PWM_MODULE_s pwmConfig);
@@ -358,7 +370,7 @@ extern volatile struct P33C_PWM_GENERATOR_s p33c_PwmGenerator_ConfigRead(volatil
 extern volatile uint16_t p33c_PwmGenerator_ConfigWrite(volatile uint16_t pgInstance, 
                             volatile struct P33C_PWM_GENERATOR_s pgConfig);
 
-extern volatile struct P33C_PWM_GENERATOR_s* p33c_PwmGenerator_GetHandle(volatile uint16_t pgInstance);
+//extern volatile struct P33C_PWM_GENERATOR_s* p33c_PwmGenerator_GetHandle(volatile uint16_t pgInstance); // Replaced by macro
 extern volatile uint16_t p33c_PwmGenerator_GetInstance(volatile struct P33C_PWM_GENERATOR_s* pg);
 extern volatile uint16_t p33c_PwmGenerator_GetGroup(volatile struct P33C_PWM_GENERATOR_s* pg);
 

@@ -62,37 +62,6 @@ volatile uint16_t p33c_PwmModule_Initialize(void)
     return(retval);
 }
 
-/* @@p33c_PwmModule__GetHandle
- * ********************************************************************************
- * Summary:
- *   Gets pointer to PWM module SFR set
- * 
- * Parameters:
- *   uint16_t pgInstance:   Index of the selected PWM generator (1=PG1, 2=PG2, etc.)
- * 
- * Returns:
- *   struct P33C_PWM_GENERATOR_s:
- *      PWM generator object of the selected PWM generator instance
- *  
- * Description:
- *      This function returns the PWM generator index, the PWM generator group
- *      (1 = [PG1-PG4], 2 = [PG5-PG8]) and the address pointer (handle) of
- *      the PWM generator Special Function Register set. handle can be used
- *      to directly read from/write to PWM registers of the selected PWM 
- *      generator with zero API overhead.
- * 
- * ********************************************************************************/
-
-volatile struct P33C_PWM_MODULE_s* p33c_PwmModule_GetHandle(void)
-{
-    volatile struct P33C_PWM_MODULE_s* pwm;
-    
-    // Capture Handle: set pointer to memory address of desired PWM instance
-    pwm = (volatile struct P33C_PWM_MODULE_s*) ((volatile uint8_t*)&PCLKCON);
-    
-    return(pwm);
-}
-
 /* @@p33c_PwmModule_Dispose
  * ********************************************************************************
  * Summary:
@@ -613,36 +582,6 @@ volatile uint16_t p33c_PwmGenerator_SetDeadTimes(
     
     return(retval);       
     
-}
-/* @@p33c_PwmGenerator_GetHandle
- * ********************************************************************************
- * Summary:
- * 
- * Parameters:
- *   uint16_t pgInstance:   Index of the selected PWM generator (1=PG1, 2=PG2, etc.)
- * 
- * Returns:
- *   struct P33C_PWM_GENERATOR_s:
- *      PWM generator object of the selected PWM generator instance
- *  
- * Description:
- *      This function returns the PWM generator index, the PWM generator group
- *      (1 = [PG1-PG4], 2 = [PG5-PG8]) and the address pointer (pgHandle) of
- *      the PWM generator Special Function Register set. pgHandle can be used
- *      to directly read from/write to PWM registers of the selected PWM 
- *      generator with zero API overhead.
- * 
- * ********************************************************************************/
-
-volatile struct P33C_PWM_GENERATOR_s* p33c_PwmGenerator_GetHandle(volatile uint16_t pgInstance)
-{
-    volatile struct P33C_PWM_GENERATOR_s* pg;
-    
-    // Capture Handle: set pointer to memory address of desired PWM instance
-    pg = (volatile struct P33C_PWM_GENERATOR_s*) 
-         ((volatile uint8_t*)&PG1CONL + ((pgInstance - 1) * P33C_PWMGEN_SFR_OFFSET));
-    
-    return(pg);
 }
 
 volatile uint16_t p33c_PwmGenerator_GetInstance(volatile struct P33C_PWM_GENERATOR_s* pg)

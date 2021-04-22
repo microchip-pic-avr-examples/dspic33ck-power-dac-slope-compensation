@@ -27,36 +27,6 @@
 
 #include "p33c_dac.h"
 
-/* @@p33c_DacModule__GetHandle
- * ********************************************************************************
- * Summary:
- *   Gets pointer to DAC Module SFR set
- * 
- * Parameters:
- *   (none)
- * 
- * Returns:
- *   struct P33C_DAC_MODULE_s:
- *      Pointer to DAC module special function register set object 
- *  
- * Description:
- *      This function returns the pointer to a DAC module register set
- *    Special Function Register memory space. This pointer can be used to 
- *    directly write to/read from the Special Function Registers of the 
- *    DAC peripheral module configuration.
- * 
- * ********************************************************************************/
-
-volatile struct P33C_DAC_MODULE_s* p33c_DacModule_GetHandle(void)
-{
-    volatile struct P33C_DAC_MODULE_s* dac;
-    
-    // Capture Handle: set pointer to memory address of desired DAC instance
-    dac = (volatile struct P33C_DAC_MODULE_s*)((volatile uint8_t*) &DACCTRL1L);
-    
-    return(dac);
-}
-
 /* @@p33c_DacModule_Dispose
  * ********************************************************************************
  * Summary:
@@ -164,37 +134,6 @@ volatile uint16_t p33c_DacModule_ConfigWrite(
 /* ============================================================================== */
 /* ============================================================================== */
 
-
-/* @@p33c_DacInstance__GetHandle
- * ********************************************************************************
- * Summary:
- *   Gets pointer to DAC Instance SFR set
- * 
- * Parameters:
- *   uint16_t pgInstance:   Index of the selected DAC Instance (1=DAC1, 2=DAC2, etc.)
- * 
- * Returns:
- *   struct P33C_DAC_INSTANCE_s:
- *      DAC instance object of the selected DAC instance
- *  
- * Description:
- *      This function returns the pointer to a DAC instance register set in 
- *    Special Function Register memory space. This pointer can be used to directly
- *    write to/read from the Special Function Registers of a given peripheral
- *    instance.
- * 
- * ********************************************************************************/
-
-volatile struct P33C_DAC_INSTANCE_s* p33c_DacInstance__GetHandle(volatile uint16_t dac_Instance)
-{
-    volatile struct P33C_DAC_INSTANCE_s* dac;
-    
-    // Capture Handle: set pointer to memory address of desired DAC instance
-    dac = (volatile struct P33C_DAC_INSTANCE_s*) 
-        ((volatile uint8_t*) &DAC1CONL + ((dac_Instance - 1) * P33C_DAC_SFR_OFFSET));
-    
-    return(dac);
-}
 
 /* @@p33c_DacInstance_Dispose
  * ********************************************************************************
