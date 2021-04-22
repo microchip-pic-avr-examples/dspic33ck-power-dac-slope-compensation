@@ -109,7 +109,7 @@
  * API FUNCTION PROTOTYPES
  * ********************************************************************************************* */
 
-extern volatile struct P33C_DAC_MODULE_s* p33c_DacModule__GetHandle(void);
+extern volatile struct P33C_DAC_MODULE_s* p33c_DacModule_GetHandle(void);
 
 extern volatile uint16_t p33c_DacModule_Dispose(void);
 

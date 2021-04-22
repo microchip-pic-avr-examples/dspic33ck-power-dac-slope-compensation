@@ -47,7 +47,7 @@
  * 
  * ********************************************************************************/
 
-volatile struct P33C_DAC_MODULE_s* p33c_DacModule__GetHandle(void)
+volatile struct P33C_DAC_MODULE_s* p33c_DacModule_GetHandle(void)
 {
     volatile struct P33C_DAC_MODULE_s* dac;
     
