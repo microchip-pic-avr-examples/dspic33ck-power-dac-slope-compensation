@@ -50,17 +50,17 @@
 
     typedef struct P33C_DAC_MODULE_s{
         union {
-            volatile struct tagDACCTRL1LBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDACCTRL1LBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DacModuleCtrl1L;    // (DACCTRL1L) DAC CONTROL 1 REGISTER LOW
-        volatile unsigned : 16;         // (reserved)
+        unsigned : 16;         // (reserved)
         union {
-            volatile struct tagDACCTRL2LBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDACCTRL2LBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DacModuleCtrl2L;    // (DACCTRL2L) DAC CONTROL 2 REGISTER LOW
         union {
-            volatile struct tagDACCTRL2HBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDACCTRL2HBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DacModuleCtrl2H;    // (DACCTRL2H) DAC CONTROL 2 REGISTER HIGH
     } __attribute__((packed)) obj_P33C_DAC_MODULE_t; // PDM DAC MODULE REGISTER SET
 
@@ -71,36 +71,36 @@
     
     typedef struct P33C_DAC_INSTANCE_s{
         union {
-            volatile struct tagDAC1CONLBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1CONLBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DACxCONL; // DACxCONL: DACx CONTROL LOW REGISTER
         union {
-            volatile struct tagDAC1CONHBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1CONHBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DACxCONH; // DACxCONH: DACx CONTROL HIGH REGISTER
         union {
-            volatile struct tagDAC1DATLBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1DATLBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DACxDATL; // DACxDATL: DACx DATA LOW REGISTER
         union {
-            volatile struct tagDAC1DATHBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1DATHBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } DACxDATH; // DACxDATH: DACx DATA HIGH REGISTER
         union {
-            volatile struct tagSLP1CONLBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagSLP1CONLBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } SLPxCONL; // SLPxCONL: DACx SLOPE CONTROL LOW REGISTER
         union {
-            volatile struct tagSLP1CONHBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagSLP1CONHBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } SLPxCONH; // SLPxCONH: DACx SLOPE CONTROL HIGH REGISTER
         union {
-            volatile struct tagSLP1DATBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagSLP1DATBITS bits; // Register bit-field
+            uint16_t value; // 16-bit wide register value
         } SLPxDAT;  // SLPxDAT: DACx SLOPE DATA REGISTER
     } __attribute__((packed)) obj_P33C_DAC_INSTANCE_t; // PDM DAC INSTANCE REGISTER SET
     
-    #define P33C_DAC_SFR_OFFSET  ((volatile uint16_t)&DAC2CONL - (volatile uint16_t)&DAC1CONL)
+    #define P33C_DAC_SFR_OFFSET  ((uint16_t)&DAC2CONL - (uint16_t)&DAC1CONL)
 
 #endif
 
