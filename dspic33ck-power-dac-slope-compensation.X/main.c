@@ -166,15 +166,16 @@ volatile uint16_t dbgled_cnt = 0;
  */
 int main(void)
 {
+    volatile uint16_t retval=1; // Local function return verification variable
     
     // initialize the device
     SYSTEM_Initialize();
     
     // User PWM Initialization
-    PWM_Initialize();
+    retval &= PWM_Initialize();
     
     // User DAC Initialization
-    DAC_Initialize();
+    retval &= DAC_Initialize();
     
     // Initialize DP PIM and DP DevBoard function pins
     _T1IF = 0;

@@ -22,8 +22,10 @@
 /* 
  * File: pwc.c 
  * Author: A14426
- * Comments:  source file of pwm.h header file
- * Revision history: 0
+ * Comments: Initializes the switching frequency PWM
+ * Revision history: 
+ *  1.0 Initial version
+ *  1.1 cleaned up and simplified version
  */
 
 #include <xc.h> // include processor files - each processor file is guarded.  
@@ -34,9 +36,8 @@
 #include "config/demo.h"
 #include "pwm.h"
 
-
-/* Declare global, user-defined PWM generator object */
-volatile struct P33C_PWM_GENERATOR_s* my_pg1;    // user-defined PWM generator 1 object 
+/* Declaration of user-defined PWM instance */
+volatile struct P33C_PWM_GENERATOR_s* my_pg1 ;    // user-defined PWM generator 1 object 
 
 
 volatile uint16_t PWM_Initialize(void) {
@@ -44,13 +45,13 @@ volatile uint16_t PWM_Initialize(void) {
     volatile uint16_t retval=1;
 
     // Default PWM Initialization for 500 MHz input clock from AUX PLL
-    p33c_PwmModule_Initialize();
+    retval &= p33c_PwmModule_Initialize();
 
     // Capture handle to the desired PWM generator 
     my_pg1 = p33c_PwmGenerator_GetHandle(PWM_GENERATOR);
    
     // Reset PGx SFRs to RESET conditions
-    p33c_PwmGenerator_ConfigWrite(PWM_GENERATOR, pgConfigClear);
+    retval &= p33c_PwmGenerator_ConfigWrite(PWM_GENERATOR, pgConfigClear);
   
     
     // Set individual PWM generator configuration for PG1
@@ -84,25 +85,14 @@ volatile uint16_t PWM_Initialize(void) {
     my_pg1->PGxIOCONH.bits.PMOD = 0b00; // PWM Generator outputs operate in Complementary mode
     
     // Set PWM signal generation timing of this generator 
-    my_pg1->PGxPER.value = PWM_PERIOD;   
-    my_pg1->PGxDC.value  = PWM_DUTY_CYCLE;   
-    my_pg1->PGxDTH.value = PWM_DEAD_TIME_RE;     
-    my_pg1->PGxDTL.value = PWM_DEAD_TIME_FE;     
+    my_pg1->PGxPER.value = PWM_PERIOD;          // Set switching frequency
+    my_pg1->PGxDC.value  = PWM_DUTY_CYCLE;      // Set initial duty cycle
+    my_pg1->PGxDTH.value = PWM_DEAD_TIME_RE;    // Set rising edge dead time
+    my_pg1->PGxDTL.value = PWM_DEAD_TIME_FE;    // Set falling edge dead time     
     
     // Set PWM signal generation trigger output timing
-    my_pg1->PGxTRIGB.value = SLP_TRIG_START;
-    my_pg1->PGxTRIGC.value = SLP_TRIG_STOP; 
-    
-    // Enable PWM generators with outputs DISABLED
-    p33c_PwmGenerator_Enable(my_pg1); 
-    
-    Nop(); // Place breakpoint to review PWM configuration
-    Nop(); // using the Watch Window
-    Nop();
-    
-    // Enable PWM generator outputs (starts signal generation at next period transition)
-    p33c_PwmGenerator_Resume(my_pg1);
-    
+    my_pg1->PGxTRIGB.value = SLP_TRIG_START;    // Set ramp start trigger location
+    my_pg1->PGxTRIGC.value = SLP_TRIG_STOP;     // Set ramp stop trigger location
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // PLEASE NOTE:
@@ -145,8 +135,27 @@ volatile uint16_t PWM_Initialize(void) {
     #endif
 
     // Check return value
-    retval = (bool)(my_pg1->PGxCONL.bits.ON) &&         // Check if PWM generator is turned on
+    retval &= (bool)(my_pg1->PGxCONL.bits.ON) &&         // Check if PWM generator is turned on
                    (!my_pg1->PGxIOCONL.bits.OVRENH);  
     
     return(retval); // Return 1=success, 0=failure
+    
+}
+
+volatile uint16_t PWM_Enable(void) {
+
+    volatile uint16_t retval=1;
+
+    // Enable PWM generators with outputs DISABLED
+    retval &= p33c_PwmGenerator_Enable(my_pg1); 
+    
+    Nop(); // Place breakpoint to review PWM configuration
+    Nop(); // using the Watch Window
+    Nop();
+    
+    // Enable PWM generator outputs 
+    retval &= p33c_PwmGenerator_Resume(my_pg1); 
+    
+    return(retval); // Return 1=success, 0=failure
+
 }
