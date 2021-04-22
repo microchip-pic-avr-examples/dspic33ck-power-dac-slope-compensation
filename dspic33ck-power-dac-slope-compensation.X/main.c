@@ -184,6 +184,10 @@ int main(void)
     SW_InitAsInput();
     TP03_InitAsOutput();
     
+    // Enable PWM and DAC peripherals
+    retval &= PWM_Enable(); // Turn on PWM module and user-specified instance
+    retval &= DAC_Enable(); // Turn on DAC module and user-specified instance
+    
     /* main loop */
     while (1)
     {
