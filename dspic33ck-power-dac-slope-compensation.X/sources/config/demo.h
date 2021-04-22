@@ -71,7 +71,7 @@
 #define DAC_VOLTAGE_HIGH_1      (float) 1.800 // Demo-mode DAC level #1
 #define DAC_VOLTAGE_HIGH_2      (float) 2.500 // Demo-mode DAC level #2
 #define SLOPE_START_DELAY       (float) 0.10  // Delay in {%] until the slope compensation ramp starts
-#define SLOPE_STOP_DELAY        (float) 0.95  // Delay in [%] until the slope compensation ramp stops
+#define SLOPE_STOP_DELAY        (float) 0.90  // Delay in [%] until the slope compensation ramp stops
 #define SLOPE_SLEW_RATE_1       (float) 0.200 // Delay in [V/µs] 
 #define SLOPE_SLEW_RATE_2       (float) 0.400 // Delay in [V/µs] 
 
