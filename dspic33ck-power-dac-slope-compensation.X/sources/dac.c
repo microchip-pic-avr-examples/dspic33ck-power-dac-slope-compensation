@@ -63,7 +63,6 @@ volatile uint16_t DAC_Initialize(void){
 
     my_dac->SLPxCONL.bits.SLPSTOPB = 0b0000; // Slope Stop B Signal: 0=none, 1=comparator 1, 2=comparator 2, etc.
     my_dac->SLPxCONL.bits.SLPSTRT  = 0b0001; // Slope Start Signal: PWM1 Trigger 1
-//    my_dac_instance->SLPxCONL.bits.SLPSTOPA = 0b0001; // Slope Stop A Signal: PWM1 Trigger 2
     my_dac->SLPxDAT.value  = SLP_SLEW_RATE_1; // Slope Ramp Rate Value Slope 
     
     my_dac->DACxDATH.value = DACOUT_VALUE_HIGH_1;   // specifies the high DACx data value
