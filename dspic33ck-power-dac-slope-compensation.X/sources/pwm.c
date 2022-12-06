@@ -109,7 +109,7 @@ volatile uint16_t PWM_Initialize(void) {
     // On dsPIC33CK DP PIM (MA330048) PWM generator output PWM7L is shared
     // with the on-board push button of the Digital Power Development
     // Board (DM330029). The PWM7L output signal will get filtered and
-    // distorted by the switch debounce capacitor and is therefore 
+    // distorted by the switch de-bounce capacitor and is therefore 
     // being turned off here.
     
     if(PWM_GENERATOR == 7) 
@@ -123,7 +123,7 @@ volatile uint16_t PWM_Initialize(void) {
     // On dsPIC33CH DP PIM (MA330049) PWM generator output PWM2L is shared
     // with the on-board push button of the Digital Power Development
     // Board (DM330029). The PWM7L output signal will get filtered and
-    // distorted by the switch debounce capacitor and is therefore 
+    // distorted by the switch de-bounce capacitor and is therefore 
     // being turned off here.
 
     if(MOTHER_PWM_GENERATOR == 2) 
@@ -159,3 +159,6 @@ volatile uint16_t PWM_Enable(void) {
     return(retval); // Return 1=success, 0=failure
 
 }
+
+// ________________________
+// end of file

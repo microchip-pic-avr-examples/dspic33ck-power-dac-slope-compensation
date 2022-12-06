@@ -412,4 +412,6 @@ extern volatile struct P33C_PWM_GENERATOR_s pgConfigClear;
 
 
 #endif	/* P33C_PWM_SFR_ABSTRACTION_H */
-// END OF FILE
+
+// ________________________
+// end of file
