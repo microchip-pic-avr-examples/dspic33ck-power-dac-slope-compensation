@@ -4,25 +4,25 @@
    "content":{
       "metaDataVersion":"1.0.0",
       "name":"com.microchip.mplabx.project.dspic33ck-power-dac-slope-compensation",
-      "version":"1.1.0",
+      "version":"1.2.0",
       "displayName":"dsPIC33CK/CH-MP DAC Configuration: Slope Compensation ",
       "projectName":"dspic33ck-power-dac-slope-compensation",
       "shortDescription":"DAC Slope Compensation Ramp Output Configuration Example for dsPIC33CK-MP devices",
       "ide":{
          "name":"MPLABX",
-         "semverRange":">=5.40.0"
+         "semverRange":">=6.00.0"
       },
       "compiler":{
          "name":"XC16",
-         "semverRange":"^1.50.0"
+         "semverRange":"^2.00.0"
       },
       "dfp":{
          "name":"dsPIC33CK-MP_DFP",
-         "semverRange":"^1.4.102"
+         "semverRange":"^1.9.228"
       },
 	  "configurator": {
          "name": "MCC",
-         "semverRange": ">=4.0.1"
+         "semverRange": ">=4.85.1"
       },
       "device":{
          "metaDataVersion":"1.0.0",
