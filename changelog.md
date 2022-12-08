@@ -4,11 +4,12 @@
 
 - Upgraded code example to be compatible with MPLABreg; X IDE v6.00
 - Upgraded code example to be compatible with MPLABreg; XC16 v2.00
+- Upgraded code example to be compatible with MPLABreg; Code Configurator v5.00
 
 ## Features Added\Updated
 
 - Removed references to interrupt controller status bits DMT and DAE, which are not supported in XC16 v2.00 anymore
-- Re-generated source code output with MCC version 4.85.1
+- Re-generated source code output with MCC version 5.4.14
 
 # dspic33ck-power-dac-slope-compensation, release v1.1.0
 
