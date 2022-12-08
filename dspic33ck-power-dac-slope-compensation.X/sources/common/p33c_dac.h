@@ -48,68 +48,85 @@
 // GENERIC PDM DAC MODULE SPECIAL FUNCTION REGISTER SET
 #ifndef P33C_DAC_MODULE_s
 
-    typedef struct P33C_DAC_MODULE_s{
+    struct P33C_DAC_MODULE_s{
         union {
-            volatile struct tagDACCTRL1LBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDACCTRL1LBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DacModuleCtrl1L;    // (DACCTRL1L) DAC CONTROL 1 REGISTER LOW
-        volatile unsigned : 16;         // (reserved)
+        unsigned : 16;         // (reserved/empty memory gap)
         union {
-            volatile struct tagDACCTRL2LBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDACCTRL2LBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DacModuleCtrl2L;    // (DACCTRL2L) DAC CONTROL 2 REGISTER LOW
         union {
-            volatile struct tagDACCTRL2HBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDACCTRL2HBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DacModuleCtrl2H;    // (DACCTRL2H) DAC CONTROL 2 REGISTER HIGH
-    } __attribute__((packed)) obj_P33C_DAC_MODULE_t; // PDM DAC MODULE REGISTER SET
+    }; 
+    typedef struct P33C_DAC_MODULE_s P33C_DAC_MODULE_t; // PDM DAC MODULE REGISTER SET
 
 #endif
 
 // GENERIC PDM DAC INSTANCE SPECIAL FUNCTION REGISTER SET
 #ifndef P33C_DAC_INSTANCE_s    
     
-    typedef struct P33C_DAC_INSTANCE_s{
+    struct P33C_DAC_INSTANCE_s {
         union {
-            volatile struct tagDAC1CONLBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1CONLBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DACxCONL; // DACxCONL: DACx CONTROL LOW REGISTER
         union {
-            volatile struct tagDAC1CONHBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1CONHBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DACxCONH; // DACxCONH: DACx CONTROL HIGH REGISTER
         union {
-            volatile struct tagDAC1DATLBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1DATLBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DACxDATL; // DACxDATL: DACx DATA LOW REGISTER
         union {
-            volatile struct tagDAC1DATHBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagDAC1DATHBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } DACxDATH; // DACxDATH: DACx DATA HIGH REGISTER
         union {
-            volatile struct tagSLP1CONLBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagSLP1CONLBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } SLPxCONL; // SLPxCONL: DACx SLOPE CONTROL LOW REGISTER
         union {
-            volatile struct tagSLP1CONHBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagSLP1CONHBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } SLPxCONH; // SLPxCONH: DACx SLOPE CONTROL HIGH REGISTER
         union {
-            volatile struct tagSLP1DATBITS bits; // Register bit-field
-            volatile uint16_t value; // 16-bit wide register value
+            struct tagSLP1DATBITS bits; // Register bit-field
+            uint16_t value : 16; // 16-bit wide register value
         } SLPxDAT;  // SLPxDAT: DACx SLOPE DATA REGISTER
-    } __attribute__((packed)) obj_P33C_DAC_INSTANCE_t; // PDM DAC INSTANCE REGISTER SET
+    }; // PDM DAC INSTANCE REGISTER SET
+    typedef struct P33C_DAC_INSTANCE_s P33C_DAC_INSTANCE_t; // PDM DAC INSTANCE REGISTER SET
     
-    #define P33C_DAC_SFR_OFFSET  ((volatile uint16_t)&DAC2CONL - (volatile uint16_t)&DAC1CONL)
+    #define P33C_DAC_SFR_OFFSET  ((uint16_t)&DAC2CONL - (uint16_t)&DAC1CONL)
 
 #endif
 
+// Declare macro for getting start memory address of DAC module data structure
+#define p33c_DacModule_GetHandle()      (P33C_DAC_MODULE_t*)&DACCTRL1L
 
+// Declare macro for getting start memory address of DAC instance data structure
+#if defined (DAC4CONL)
+#define p33c_DacInstance_GetHandle(x)   (P33C_DAC_INSTANCE_t*)&DAC1CONL, (P33C_DAC_INSTANCE_t*)&DAC2CONL, \
+                                        (P33C_DAC_INSTANCE_t*)&DAC3CONL, (P33C_DAC_INSTANCE_t*)&DAC4CONL
+#elif defined (DAC3CONL)
+#define p33c_DacInstance_GetHandle(x)   (P33C_DAC_INSTANCE_t*)&DAC1CONL, (P33C_DAC_INSTANCE_t*)&DAC2CONL, \
+                                        (P33C_DAC_INSTANCE_t*)&DAC3CONL
+#elif defined (DAC2CONL)
+#define p33c_DacInstance_GetHandle(x)   (P33C_DAC_INSTANCE_t*)&DAC1CONL, (P33C_DAC_INSTANCE_t*)&DAC2CONL
+#elif defined (DAC1CONL)
+#define p33c_DacInstance_GetHandle(x)   (P33C_DAC_INSTANCE_t*)&DAC1CONL 
+#else
+#pragma message "warning: no DAC instance support for the selected device"
+#endif
+    
 /* ********************************************************************************************* * 
  * API FUNCTION PROTOTYPES
  * ********************************************************************************************* */
-
-extern volatile struct P33C_DAC_MODULE_s* p33c_DacModule__GetHandle(void);
 
 extern volatile uint16_t p33c_DacModule_Dispose(void);
 
@@ -118,10 +135,6 @@ extern volatile uint16_t p33c_DacModule_ConfigWrite(
                     volatile struct P33C_DAC_MODULE_s dacConfig
                 );
 
-
-extern volatile struct P33C_DAC_INSTANCE_s* p33c_DacInstance__GetHandle(
-                    volatile uint16_t dac_Instance
-                );
 
 extern volatile uint16_t p33c_DacInstance_Dispose(
                     volatile uint16_t dacInstance
