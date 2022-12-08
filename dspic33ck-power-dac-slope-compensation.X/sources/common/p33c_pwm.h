@@ -83,17 +83,17 @@
 
 #ifndef P33C_PWM_MODULE_s     
 
-    typedef struct P33C_PWM_MODULE_s {
+    struct P33C_PWM_MODULE_s {
         
         union {
             struct tagPCLKCONBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         } vPCLKCON; // PCLKCON: PWM CLOCK CONTROL REGISTER
         union {   
         struct {
             uint16_t FSCL : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }vFSCL; // FSCL: FREQUENCY SCALE REGISTER
         union {   
         struct {
@@ -105,26 +105,26 @@
         struct {
             uint16_t MPHASE : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }vMPHASE; // MPHASE: MASTER PHASE REGISTER
         union {   
         struct {
             uint16_t MDC : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }vMDC; // MDC: MASTER DUTY CYCLE REGISTER
         union {   
         struct {
             uint16_t MPER : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }vMPER; // MPER: MASTER PERIOD REGISTER
         union {   
         struct {
             uint16_t LFSR : 15; // Register bit-field
             uint16_t      : 1;  // (reserved)
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }vLFSR; // LFSR: LINEAR FEEDBACK SHIFT REGISTER
         union {   
             struct tagCMBTRIGLBITS bits; // Register bit-field
@@ -183,7 +183,8 @@
             uint16_t value : 16; // 16-bit wide register value
         }PWMEVT_F; // PWMEVTx: PWM EVENT OUTPUT CONTROL REGISTER x
        
-    } __attribute__((packed)) P33C_PWM_MODULE_t; // PWM MODULE SPECIAL FUNCTION REGISTER SET
+    }; // PWM MODULE SPECIAL FUNCTION REGISTER SET
+    typedef struct P33C_PWM_MODULE_s P33C_PWM_MODULE_t;
 
 #endif
         
@@ -192,124 +193,124 @@
     
 #ifndef P33C_PWM_GENERATOR_s     
 
-    typedef struct P33C_PWM_GENERATOR_s {
+    struct P33C_PWM_GENERATOR_s {
         union {   
             struct tagPG1CONLBITS bits; // Register bit-field
             uint16_t value : 16; // 16-bit wide register value
         }PGxCONL; // PGxCONH: PWM GENERATOR x CONTROL REGISTER HIGH
         union {
             struct tagPG1CONHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxCONH; // PGxCONH: PWM GENERATOR x CONTROL REGISTER HIGH
         union {
             struct tagPG1STATBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxSTAT; // PGxSTAT: PWM GENERATOR x STATUS REGISTER
         union {
             struct tagPG1IOCONLBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxIOCONL; // PGxIOCONL: PWM GENERATOR x I/O CONTROL REGISTER LOW
         union {
             struct tagPG1IOCONHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         } PGxIOCONH; // PGxIOCONH: PWM GENERATOR x I/O CONTROL REGISTER HIGH
         union {
             struct tagPG1EVTLBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxEVTL;  // PGxEVTL: PWM GENERATOR x EVENT REGISTER LOW
         union {
             struct tagPG1EVTHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxEVTH;  // PGxEVTH: PWM GENERATOR x EVENT REGISTER HIGH
         union {
             struct tagPG1FPCILBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxFPCIL; // PGxFPCIL: PWM GENERATOR x FAULT PCI REGISTER LOW
         union {
             struct tagPG1FPCIHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxFPCIH; // PGxFPCIH: PWM GENERATOR x FAULT PCI REGISTER HIGH
         union {
             struct tagPG1CLPCILBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxCLPCIL; // PGxCLPCIL: PWM GENERATOR x CURRENT LIMIT PCI REGISTER LOW
         union {
             struct tagPG1CLPCIHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxCLPCIH; // PGxCLPCIH: PWM GENERATOR x CURRENT LIMIT PCI REGISTER HIGH
         union {
             struct tagPG1FFPCILBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxFFPCIL; // PGxFFPCIL: PWM GENERATOR x FEED FORWARD PCI REGISTER LOW
         union {
             struct tagPG1FFPCIHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxFFPCIH; // PGxFFPCIH: PWM GENERATOR x FEED FORWARD PCI REGISTER HIGH
         union {
             struct tagPG1SPCILBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxSPCIL; // PGxSPCIL: PWM GENERATOR x SOFTWARE PCI REGISTER LOW
         union {
             struct tagPG1SPCIHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxSPCIH; // PGxSPCIH: PWM GENERATOR x SOFTWARE PCI REGISTER HIGH
         union {
             struct {
                 uint16_t LEBL : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxLEBL;  // PGxLEBL: PWM GENERATOR x LEADING-EDGE BLANKING REGISTER LOW
         union {
             struct tagPG1LEBHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxLEBH;  // PGxLEBH: PWM GENERATOR x LEADING-EDGE BLANKING REGISTER HIGH
         union {
             struct {
                 uint16_t PHASE : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxPHASE; // PGxPHASE: PWM GENERATOR x PHASE REGISTER
         union {
             struct {
                 uint16_t DC : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxDC;    // PGxDC: PWM GENERATOR x DUTY CYCLE REGISTER
         union {
             struct tagPG1DCABITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxDCA;   // PGxDCA: PWM GENERATOR x DUTY CYCLE ADJUSTMENT REGISTER
         union {
             struct {
                 uint16_t PER : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxPER;   // PGxPER: PWM GENERATOR x PERIOD REGISTER
         union {
             struct {
                 uint16_t TRIG : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxTRIGA; // PGxTRIGA: PWM GENERATOR x TRIGGER A REGISTER
         union {
             struct {
                 uint16_t TRIG : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxTRIGB; // PGxTRIGB: PWM GENERATOR x TRIGGER B REGISTER
         union {
             struct {
                 uint16_t TRIG : 16; // Register bit-field
             } bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxTRIGC; // PGxTRIGC: PWM GENERATOR x TRIGGER C REGISTER
         union {
             struct tagPG1DTLBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxDTL;   // PGxDTL: PWM GENERATOR x DEAD-TIME REGISTER LOW
         union {
             struct tagPG1DTHBITS bits; // Register bit-field
-            uint16_t value; // 16-bit wide register value
+            uint16_t value : 16; // 16-bit wide register value
         }PGxDTH;   // PGxDTH: PWM GENERATOR x DEAD-TIME REGISTER HIGH
         union  { 
             struct {
@@ -317,18 +318,29 @@
             } bits; // Register bit-field
             uint16_t value : 16; // 16-bit wide register value
         }PGxCAP; // PGxCAP: PWM GENERATOR x CAPTURE REGISTER
-    } __attribute__((packed)) P33C_PWM_GENERATOR_t; // PWM GENERATOR INSTANCE SPECIAL FUNCTION REGISTER SET
-        
+    }; // PWM GENERATOR INSTANCE SPECIAL FUNCTION REGISTER SET
+    typedef struct P33C_PWM_GENERATOR_s P33C_PWM_GENERATOR_t;
+    
     // PWM generator instance Special Function Register set address offset
     #define P33C_PWMGEN_SFR_OFFSET  ((volatile uint16_t)&PG2CONL - (volatile uint16_t)&PG1CONL)
 
 #endif
 
-// Determine number of available PWM generators on the selected device
+
+// Macro declaration to access PWM module data structure memory address
+#define p33c_PwmModule_GetHandle()      (P33C_PWM_MODULE_t*)&PCLKCON    
+    
+// Macro declaration to access PWM instance data structure memory address
 #if defined (PG8CONL)
-  #define P33C_PG_COUNT   8
+#define P33C_PG_COUNT   8   // Determine number of available PWM generators on the selected device
+#define p33c_PwmGenerator_GetHandle(x)  (P33C_PWM_GENERATOR_t*)&PG1CONL, (P33C_PWM_GENERATOR_t*)&PG2CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG3CONL, (P33C_PWM_GENERATOR_t*)&PG4CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG5CONL, (P33C_PWM_GENERATOR_t*)&PG6CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG7CONL, (P33C_PWM_GENERATOR_t*)&PG8CONL
 #elif defined (PG4CONL)
-  #define P33C_PG_COUNT   4    
+#define P33C_PG_COUNT   4   // Determine number of available PWM generators on the selected device
+#define p33c_PwmGenerator_GetHandle(x)  (P33C_PWM_GENERATOR_t*)&PG1CONL, (P33C_PWM_GENERATOR_t*)&PG2CONL, \
+                                        (P33C_PWM_GENERATOR_t*)&PG3CONL, (P33C_PWM_GENERATOR_t*)&PG4CONL
 #endif
     
 /* ********************************************************************************************* * 
@@ -340,7 +352,7 @@
  * ********************************************************************************************* */
     
 // PWM Module essential functions
-extern volatile struct P33C_PWM_MODULE_s* p33c_PwmModule_GetHandle(void);
+//extern volatile struct P33C_PWM_MODULE_s* p33c_PwmModule_GetHandle(void); // Replaced by macro
 
 extern volatile struct P33C_PWM_MODULE_s p33c_PwmModule_ConfigRead(void);
 extern volatile uint16_t p33c_PwmModule_ConfigWrite(volatile struct P33C_PWM_MODULE_s pwmConfig);
@@ -358,7 +370,7 @@ extern volatile struct P33C_PWM_GENERATOR_s p33c_PwmGenerator_ConfigRead(volatil
 extern volatile uint16_t p33c_PwmGenerator_ConfigWrite(volatile uint16_t pgInstance, 
                             volatile struct P33C_PWM_GENERATOR_s pgConfig);
 
-extern volatile struct P33C_PWM_GENERATOR_s* p33c_PwmGenerator_GetHandle(volatile uint16_t pgInstance);
+//extern volatile struct P33C_PWM_GENERATOR_s* p33c_PwmGenerator_GetHandle(volatile uint16_t pgInstance); // Replaced by macro
 extern volatile uint16_t p33c_PwmGenerator_GetInstance(volatile struct P33C_PWM_GENERATOR_s* pg);
 extern volatile uint16_t p33c_PwmGenerator_GetGroup(volatile struct P33C_PWM_GENERATOR_s* pg);
 
@@ -400,4 +412,6 @@ extern volatile struct P33C_PWM_GENERATOR_s pgConfigClear;
 
 
 #endif	/* P33C_PWM_SFR_ABSTRACTION_H */
-// END OF FILE
+
+// ________________________
+// end of file

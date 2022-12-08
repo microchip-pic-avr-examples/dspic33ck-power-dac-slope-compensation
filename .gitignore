@@ -19,6 +19,7 @@ nbproject/build/
 nbproject/dist/
 nbproject/private/
 nbproject/disassembly/
+.generated_files/
 build/
 dist/
 private/

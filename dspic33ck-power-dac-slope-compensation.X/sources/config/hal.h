@@ -42,6 +42,10 @@
 #include <stdbool.h> // include standard boolean data types
 #include <stddef.h> // include standard definition data types
 
+
+// Include peripehral assignments and signal levels of this demo
+#include "demo.h"
+
 // include hardware abstraction layer header file for the 
 // Digital Power Development Board (Part-No. DM330029)
 #if defined (__DM330029_R20__)
@@ -56,17 +60,6 @@
     #pragma message "selected device not available"
 #endif
 
-#ifdef	__cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-    // TODO If C++ is being used, regular C code needs function names to have C 
-    // linkage so the functions can be used by the c code. 
-
-    
-#ifdef	__cplusplus
-}
-#endif /* __cplusplus */
 
 #endif	/* __HARDWARE_ABSTRACTION_LAYER_HEADER_H__ */
 
