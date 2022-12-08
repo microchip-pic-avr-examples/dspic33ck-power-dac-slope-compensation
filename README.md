@@ -34,7 +34,7 @@ Code example for dsPIC33CK and dsPIC33CH devices showing a basic configuration o
 
 - [MPLAB® X IDE v6.00](https://www.microchip.com/mplab/mplab-x-ide)
 - [MPLAB® XC16 Compiler v2.00](https://www.microchip.com/mplabxc16windows)
-- [MPLAB® Code Configurator v4.85.1](https://www.microchip.com/mcc)
+- [MPLAB® Code Configurator v5.4.14](https://www.microchip.com/mcc)
 
 ## Hardware Used
 
