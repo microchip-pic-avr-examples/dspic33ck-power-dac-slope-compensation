@@ -2,9 +2,9 @@
    "metaDataVersion":"1.0.0",
    "category":"com.microchip.ide.project",
    "content":{
-      "metaDataVersion":"1.0.0",
+      "metaDataVersion":"1.3.0",
       "name":"com.microchip.mplabx.project.dspic33ck-power-dac-slope-compensation",
-      "version":"1.2.0",
+      "version":"1.2.1",
       "displayName":"dsPIC33CK/CH-MP DAC Configuration: Slope Compensation ",
       "projectName":"dspic33ck-power-dac-slope-compensation",
       "shortDescription":"DAC Slope Compensation Ramp Output Configuration Example for dsPIC33CK-MP devices",
@@ -35,16 +35,12 @@
          }
       },
       "peripherals":[
+         "DAC",
          "PWM",
-         "SMPS PWM",
-         "TIMER",
-         "DAC"
-      ],
-      "subcategories":[
-         "Power",
-         "Power Management and Conversion"
+         "TIMER"
       ],
       "keywords":[
+         "Power Management and Conversion",
          "dsPIC",
          "DSC",
          "Digital Power Conversion",
