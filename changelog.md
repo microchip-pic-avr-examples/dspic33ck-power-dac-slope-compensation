@@ -1,3 +1,9 @@
+# dspic33ck-power-dac-slope-compensation, release v1.2.1
+
+## Release Notes
+
+- Deployment file bug prevented this code example from being displayed correctly in MPLAB&reg; Discover
+
 # dspic33ck-power-dac-slope-compensation, release v1.2.0
 
 ## Release Highlights
